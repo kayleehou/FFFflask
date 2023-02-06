@@ -21,43 +21,43 @@ class Post(db.Model):
     userID = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     # Constructor of a Notes object, initializes of instance variables within object
-    def __init__(dog, id, note, image):
-        dog.userID = id
-        dog.note = note
-        dog.image = image
+    def __init__(self, id, note, image):
+        self.userID = id
+        self.note = note
+        self.image = image
 
     # Returns a string representation of the Notes object, similar to java toString()
     # returns string
-    def __repr__(dog):
-        return "Notes(" + str(dog.id) + "," + dog.note + "," + str(dog.userID) + ")"
+    def __repr__(self):
+        return "Notes(" + str(self.id) + "," + self.note + "," + str(self.userID) + ")"
 
     # CRUD create, adds a new record to the Notes table
     # returns the object added or None in case of an error
-    def create(dog):
+    def create(self):
         try:
             # creates a Notes object from Notes(db.Model) class, passes initializers
-            db.session.add(dog)  # add prepares to persist person object to Notes table
+            db.session.add(self)  # add prepares to persist person object to Notes table
             db.session.commit()  # SqlAlchemy "unit of work pattern" requires a manual commit
-            return dog
+            return self
         except IntegrityError:
             db.session.remove()
             return None
 
     # CRUD read, returns dictionary representation of Notes object
     # returns dictionary
-    def read(dog):
+    def read(self):
         # encode image
         path = app.config['UPLOAD_FOLDER']
-        file = os.path.join(path, dog.image)
+        file = os.path.join(path, self.image)
         file_text = open(file, 'rb')
         file_read = file_text.read()
         file_encode = base64.encodebytes(file_read)
         
         return {
-            "id": dog.id,
-            "userID": dog.userID,
-            "note": dog.note,
-            "image": dog.image,
+            "id": self.id,
+            "userID": self.userID,
+            "note": self.note,
+            "image": self.image,
             "base64": str(file_encode)
         }
 
@@ -76,14 +76,14 @@ class User(db.Model):
     _uid = db.Column(db.String(255), unique=True, nullable=False)
     _breed = db.Column(db.String(255), unique=False, nullable=False)
     _sex = db.Column(db.String(255), unique=False, nullable=False)
-    _dob = db.Column(db.String(255), unique=False, nullable=False)
+    _dob = db.Column(db.Date)
     _price = db.Column(db.String(255), unique=False, nullable=False)
 
     # Defines a relationship between User record and Notes table, one-to-many (one user to many notes)
     posts = db.relationship("Post", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes the instance variables within object (dog)
-    def __init__(dog, name, uid, breed, sex, dob, price):
+    def __init__(dog, name, uid, breed, sex, price, dob=date.today()):
         dog._name = name    # variables with dog prefix become part of the object, 
         dog._uid = uid
         dog._breed = breed
@@ -200,8 +200,6 @@ class User(db.Model):
             dog.breed = breed
         if len(sex) > 0:
             dog.sex = sex
-        if len(dob) > 0:
-            dog.dob = dob
         if len(price) > 0:
             dog.price = price
         db.session.commit()
