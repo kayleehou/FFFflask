@@ -12,7 +12,7 @@ api = Api(user_api)
 
 class UserAPI:        
     class _Create(Resource):
-        def post(self):
+        def post(dog):
             ''' Read data for json body '''
             body = request.get_json()
             
@@ -20,29 +20,46 @@ class UserAPI:
             # validate name
             name = body.get('name')
             if name is None or len(name) < 2:
-                return {'message': f'Name is missing, or is less than 2 characters'}, 210
-            # validate uid
+                return {'message': f'name is missing, or is less than 2 characters'}, 210
             uid = body.get('uid')
-            if uid is None or len(uid) < 2:
-                return {'message': f'User ID is missing, or is less than 2 characters'}, 210
-            # look for password and dob
-            password = body.get('password')
+            if uid is None or len(uid) < 6:
+                return {'message': f'uidis missing, or is less than 2 characters'}, 210
+            breed = body.get('breed')
+            if breed is None or len(breed) < 2:
+                return {'message': f'breed is missing, or is less than 2 characters'}, 210
+            sex = body.get('sex')
+            if sex is None or len(sex) < 0:
+                return {'message': f'sex has to be male or female'}, 210
+            price = body.get('price')
+            if price is None or len(price) < 2:
+                return {'message': f'price has to be at least 100'}, 210
             dob = body.get('dob')
+            # validate uid
+            # look for password and dob
 
             ''' #1: Key code block, setup USER OBJECT '''
-            uo = User(name=name, 
-                      uid=uid)
+            uo = User( name=name, 
+                      uid=uid, 
+                      breed=breed, 
+                      sex=sex,
+                      price=price)
             
-            ''' Additional garbage error checking '''
-            # set password if provided
-            if password is not None:
-                uo.set_password(password)
-            # convert to date type
             if dob is not None:
                 try:
                     uo.dob = datetime.strptime(dob, '%m-%d-%Y').date()
                 except:
                     return {'message': f'Date of birth format error {dob}, must be mm-dd-yyyy'}, 210
+            
+            ''' Additional garbage error checking '''
+            # set password if provided
+            # if password is not None:
+            #     uo.set_password(password)
+            # # convert to date type
+            # if dob is not None:
+            #     try:
+            #         uo.dob = datetime.strptime(dob, '%m-%d-%Y').date()
+            #     except:
+            #         return {'message': f'Date of birth format error {dob}, must be mm-dd-yyyy'}, 210
             
             ''' #2: Key Code block to add user to database '''
             # create user in database
@@ -51,10 +68,10 @@ class UserAPI:
             if user:
                 return jsonify(user.read())
             # failure returns error
-            return {'message': f'Processed {name}, either a format error or User ID {uid} is duplicate'}, 210
+            return {'message': f'Processed {name}, either a format error or last name {uid} is duplicate'}, 210
 
     class _Read(Resource):
-        def get(self):
+        def get(dog):
             users = User.query.all()    # read/extract all users from database
             json_ready = [user.read() for user in users]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
