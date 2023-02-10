@@ -51,14 +51,14 @@ class Post(db.Model):
         file = os.path.join(path, self.image)
         file_text = open(file, 'rb')
         file_read = file_text.read()
-        file_encode = base64.encodebytes(file_read)
+        # file_encode = base64.encodebytes(file_read)
         
         return {
             "id": self.id,
             "userID": self.userID,
             "note": self.note,
             "image": self.image,
-            "base64": str(file_encode)
+            # "base64": str(file_encode)
         }
 
 
@@ -185,7 +185,7 @@ class User(db.Model):
             "sex": dog.sex,
             "dob": dog.dob,
             "price": dog.price,
-            "posts": [post.read() for post in dog.posts]
+            # "posts": [post.read() for post in dog.posts]
         }
 
     # CRUD update: updates user name, password, phone
@@ -218,9 +218,11 @@ class User(db.Model):
 
 # Builds working data for testing
 def initUsers():
-    """Create database and tables"""
-    db.create_all()
-    """Tester data for table"""
+    with app.app_context():
+        """Create database and tables"""
+        db.init_app(app)
+        db.create_all()
+        """Tester data for table"""
     u1 = User(name='Joe', uid='81729', breed='Labrador Retriever Blend', sex='male', dob=date(2022, 2, 11), price='$200')
     u2 = User(name='Bean', uid='83792', breed='Shepherd-Rottweiler Blend', sex="male", dob=date(2019, 1, 31), price='$180')
     u3 = User(name='Harry', uid='80032', breed='Hound-Terrier Blend', sex= "male", dob=date(2020, 4, 29), price='$160')
