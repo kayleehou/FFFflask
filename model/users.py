@@ -107,6 +107,10 @@ class User(db.Model):
     def breed(dog):
         return dog._breed
     
+    @property
+    def uid(dog):
+        return dog._uid
+
     # last name setter 
     @uid.setter
     def uid(dog, uid):
