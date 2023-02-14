@@ -34,6 +34,9 @@ class UserAPI:
             if price is None or len(price) < 2:
                 return {'message': f'price has to be at least 100'}, 210
             dob = body.get('dob')
+            if age is None or len(age) < 0:
+                return {'message': f'price has to be at least 100'}, 210
+            age = body.get('dob')
             # validate uid
             # look for password and dob
 
@@ -42,7 +45,8 @@ class UserAPI:
                       uid=uid, 
                       breed=breed, 
                       sex=sex,
-                      price=price)
+                      price=price,
+                      age=age )
             
             if dob is not None:
                 try:
