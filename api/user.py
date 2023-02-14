@@ -34,9 +34,6 @@ class UserAPI:
             if price is None or len(price) < 2:
                 return {'message': f'price has to be at least 100'}, 210
             dob = body.get('dob')
-            if age is None or len(age) < 0:
-                return {'message': f'price has to be at least 100'}, 210
-            age = body.get('dob')
             # validate uid
             # look for password and dob
 
@@ -46,7 +43,7 @@ class UserAPI:
                       breed=breed, 
                       sex=sex,
                       price=price,
-                      age=age )
+                      )
             
             if dob is not None:
                 try:
@@ -72,7 +69,7 @@ class UserAPI:
             if user:
                 return jsonify(user.read())
             # failure returns error
-            return {'message': f'Processed {name}, either a format error or last name {uid} is duplicate'}, 210
+            return {'message': f'uid {uid} is duplicate'}, 210
 
     class _Read(Resource):
         def get(dog):
