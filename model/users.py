@@ -189,6 +189,7 @@ class User(db.Model):
             "breed": dog.breed,
             "sex": dog.sex,
             "dob": dog.dob,
+            "age": dog.age,
             "price": dog.price,
             # "posts": [post.read() for post in dog.posts]
         }
