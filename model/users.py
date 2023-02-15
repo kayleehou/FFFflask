@@ -78,18 +78,20 @@ class User(db.Model):
     _sex = db.Column(db.String(255), unique=False, nullable=False)
     _dob = db.Column(db.Date)
     _price = db.Column(db.String(255), unique=False, nullable=False)
+    _score = db.Column(db.Integer, unique=False, nullable=False)
 
     # Defines a relationship between User record and Notes table, one-to-many (one user to many notes)
     posts = db.relationship("Post", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes the instance variables within object (dog)
-    def __init__(dog, name, uid, breed, sex, price, dob=date.today()):
+    def __init__(dog, name, uid, breed, sex, score, price, dob=date.today()):
         dog._name = name    # variables with dog prefix become part of the object, 
         dog._uid = uid
         dog._breed = breed
         dog._sex = sex 
         dog._dob = dob
         dog._price = price
+        dog._score = score
 
 
     # name GETTER
@@ -161,6 +163,16 @@ class User(db.Model):
     @price.setter
     def price(dog, price):
         dog._price = price
+
+    # score GETTER
+    @property
+    def score(dog):
+        return dog._score
+    
+    # score setter 
+    @score.setter
+    def score(dog, score):
+        dog._score = score
         
     # output content using str(object) in human readable form, uses getter
     # output content using json dumps, this is ready for API response
@@ -191,12 +203,13 @@ class User(db.Model):
             "dob": dog.dob,
             "price": dog.price,
             "age": dog.age,
+            "score": dog.score
             # "posts": [post.read() for post in dog.posts]
         }
 
     # CRUD update: updates user name, password, phone
     # returns dog
-    def update(dog, name="", uid="", breed="", sex="", price=""):
+    def update(dog, name="", uid="", breed="", sex="", price="", score=""):
         """only updates values with length"""
         if len(name) > 0:
             dog.name = name
@@ -208,6 +221,8 @@ class User(db.Model):
             dog.sex = sex
         if len(price) > 0:
             dog.price = price
+        if len(score) > 0:
+            dog.score= score
         db.session.commit()
         return dog
 
@@ -229,26 +244,26 @@ def initUsers():
         db.init_app(app)
         db.create_all()
         """Tester data for table"""
-    u1 = User(name='Joe', uid='81729', breed='Labrador Retriever Blend', sex='male', dob=date(2022, 2, 11), price='$200')
-    u2 = User(name='Bean', uid='83792', breed='Shepherd-Rottweiler Blend', sex="male", dob=date(2019, 1, 31), price='$180')
-    u3 = User(name='Harry', uid='80032', breed='Hound-Terrier Blend', sex= "male", dob=date(2020, 4, 29), price='$160')
-    u4 = User(name='Honey', uid='90276', breed='Retriever Blend', sex= "female", dob=date(2021, 11, 1), price='$200')
-    u5 = User(name='George', uid='90277', breed='Retriever Blend', sex= "male", dob=date(2021, 11, 1), price='$200')
-    u6 = User(name='Julie', uid='91236', breed='Black Mouth Cur Blend', sex= "female", dob=date(2022, 4, 9), price='$250')
-    u7 = User(name='Violet', uid='86327', breed='Retriever Blend', sex= "female", dob=date(2021, 6, 5), price='$198')
-    u8 = User(name='Doug', uid='87729', breed='Shepherd Blend', sex= "male", dob=date(2018, 11, 1), price='$120')
-    u9 = User(name='Thor', uid='90028', breed='Retriever Blend', sex= "male", dob=date(2020, 8, 17), price='$200')
-    u10 = User(name='Stark', uid='92888', breed='Doberman Pinscher Blend', sex= "male", dob=date(2020, 9, 12), price='$220')
-    u11 = User(name='Bucky', uid='94465', breed='Border Collie-Shepherd Blend', sex= "male", dob=date(2020, 9, 24), price='$140')
-    u12 = User(name='Wanda', uid='90992', breed='Shepherd-Husky Blend', sex= "female", dob=date(2019, 2, 1), price='$260')
-    u13 = User(name='Tasha', uid='94327', breed='Jack Russel Terrier', sex= "female", dob=date(2019, 10, 20), price='$130')
-    u14 = User(name='Shang', uid='80786', breed='Chihuahua Short Coat', sex= "male", dob=date(2019, 8, 25), price='$140')
-    u15 = User(name='Parker', uid='86009', breed='Dachshund', sex= "male", dob=date(2020, 3, 9), price='$155')
-    u16 = User(name='Cap', uid='89322', breed='Beagle', sex= "male", dob=date(2022, 1, 11), price='$200')
-    u17 = User(name='Shuri', uid='85359', breed='American Staffordshire Terrier', sex= "female", dob=date(2022, 1, 23), price='$190')
-    u18 = User(name='Musa', uid='96971', breed='American Bulldog', sex= "female", dob=date(2022, 2, 22), price='$160')
-    u19 = User(name='Bloom', uid='91298', breed='Maltese', sex= "female", dob=date(2017, 12, 11), price='$110')
-    u20 = User(name='Stella', uid='98030', breed='Cattle Dog', sex= "female", dob=date(2017, 12, 27), price='$220')
+    u1 = User(name='Joe', uid='81729', breed='Labrador Retriever Blend', sex='male', dob=date(2022, 2, 11), price='$200', score=34.5)
+    u2 = User(name='Bean', uid='83792', breed='Shepherd-Rottweiler Blend', sex="male", dob=date(2019, 1, 31), price='$180', score=40.5)
+    u3 = User(name='Harry', uid='80032', breed='Hound-Terrier Blend', sex= "male", dob=date(2020, 4, 29), price='$160', score=36.5)
+    u4 = User(name='Honey', uid='90276', breed='Retriever Blend', sex= "female", dob=date(2021, 11, 1), price='$200', score=28.5)
+    u5 = User(name='George', uid='90277', breed='Retriever Blend', sex= "male", dob=date(2021, 11, 1), price='$200', score=1)
+    u6 = User(name='Julie', uid='91236', breed='Black Mouth Cur Blend', sex= "female", dob=date(2022, 4, 9), price='$250', score=30.5)
+    u7 = User(name='Violet', uid='86327', breed='Retriever Blend', sex= "female", dob=date(2021, 6, 5), price='$198', score=1)
+    u8 = User(name='Doug', uid='87729', breed='Shepherd Blend', sex= "male", dob=date(2018, 11, 1), price='$120', score=26.5)
+    u9 = User(name='Thor', uid='90028', breed='Retriever Blend', sex= "male", dob=date(2020, 8, 17), price='$200', score=22.5)
+    u10 = User(name='Stark', uid='92888', breed='Doberman Pinscher Blend', sex= "male", dob=date(2020, 9, 12), price='$220', score=12.5)
+    u11 = User(name='Bucky', uid='94465', breed='Border Collie-Shepherd Blend', sex= "male", dob=date(2020, 9, 24), price='$140', score=44.5)
+    u12 = User(name='Wanda', uid='90992', breed='Shepherd-Husky Blend', sex= "female", dob=date(2019, 2, 1), price='$260', score=42.5)
+    u13 = User(name='Tasha', uid='94327', breed='Jack Russel Terrier', sex= "female", dob=date(2019, 10, 20), price='$130', score=38.5)
+    u14 = User(name='Shang', uid='80786', breed='Chihuahua Short Coat', sex= "male", dob=date(2019, 8, 25), price='$140', score=32.5)
+    u15 = User(name='Parker', uid='86009', breed='Dachshund', sex= "male", dob=date(2020, 3, 9), price='$155', score=18.5)
+    u16 = User(name='Cap', uid='89322', breed='Beagle', sex= "male", dob=date(2022, 1, 11), price='$200', score=24.5)
+    u17 = User(name='Shuri', uid='85359', breed='American Staffordshire Terrier', sex= "female", dob=date(2022, 1, 23), price='$190', score=16.5)
+    u18 = User(name='Musa', uid='96971', breed='American Bulldog', sex= "female", dob=date(2022, 2, 22), price='$160', score=10.5)
+    u19 = User(name='Bloom', uid='91298', breed='Maltese', sex= "female", dob=date(2017, 12, 11), price='$110', score=20.5)
+    u20 = User(name='Stella', uid='98030', breed='Cattle Dog', sex= "female", dob=date(2017, 12, 27), price='$220', score=14.5)
     
 
     users = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20]
