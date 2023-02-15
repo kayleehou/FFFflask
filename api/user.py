@@ -3,6 +3,8 @@ from flask_restful import Api, Resource # used for REST API building
 from datetime import datetime
 
 from model.users import User
+# import requests  # used for testing 
+# import random
 
 user_api = Blueprint('user_api', __name__,
                    url_prefix='/api/users')
@@ -10,6 +12,9 @@ user_api = Blueprint('user_api', __name__,
 # API docs https://flask-restful.readthedocs.io/en/latest/api.html
 api = Api(user_api)
 
+# class _ReadID(Resource):
+#     def get(dog, id):
+#         return jsonify(User(id))
 class UserAPI:        
     class _Create(Resource):
         def post(dog):
@@ -80,3 +85,4 @@ class UserAPI:
     # building RESTapi endpoint
     api.add_resource(_Create, '/create')
     api.add_resource(_Read, '/')
+    # api.add_resource(_ReadID, '/<int:id>')
