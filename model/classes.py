@@ -20,7 +20,7 @@ class post(db.Model):
     note = db.Column(db.Text, unique=False, nullable=False)
     image = db.Column(db.String, unique=False)
     # Define a relationship in Notes Schema to userID who originates the note, many-to-one (many notes to one user)
-    userID = db.Column(db.Integer, db.ForeignKey('users.id'))
+    userID = db.Column(db.Integer, db.ForeignKey('class.id'))
 
     # Constructor of a Notes object, initializes of instance variables within object
     def __init__(self, id, note, image):
