@@ -1,10 +1,10 @@
 version: '3'
 services:
         web:
-                image: flask_8226_v1
+                image: flask_8332_v1
                 build: .
                 ports:
-                        - "8226:8036"
+                        - "8332:8332"
                 volumes:
                         - ./volumes:/volumes
                         - ./instance:/instance
