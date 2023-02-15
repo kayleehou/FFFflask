@@ -189,14 +189,14 @@ class User(db.Model):
             "breed": dog.breed,
             "sex": dog.sex,
             "dob": dog.dob,
-            "age": dog.age,
             "price": dog.price,
+            "age": dog.age,
             # "posts": [post.read() for post in dog.posts]
         }
 
     # CRUD update: updates user name, password, phone
     # returns dog
-    def update(dog, name="", uid="", breed="", sex="", dob="", price=""):
+    def update(dog, name="", uid="", breed="", sex="", price=""):
         """only updates values with length"""
         if len(name) > 0:
             dog.name = name
