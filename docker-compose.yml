@@ -4,7 +4,7 @@ services:
                 image: flask_port_v1
                 build: .
                 ports:
-                        - "8032:8080"
+                        - "8036:8036"
                 volumes:
                         - ./volumes:/volumes
                         - ./instance:/instance
