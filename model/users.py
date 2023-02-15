@@ -189,6 +189,7 @@ class User(db.Model):
             "breed": dog.breed,
             "sex": dog.sex,
             "dob": dog.dob,
+            "age": dog.age,
             "price": dog.price,
             # "posts": [post.read() for post in dog.posts]
         }
@@ -248,9 +249,9 @@ def initUsers():
     u18 = User(name='Musa', uid='96971', breed='American Bulldog', sex= "female", dob=date(2022, 2, 22), price='$160')
     u19 = User(name='Bloom', uid='91298', breed='Maltese', sex= "female", dob=date(2017, 12, 11), price='$110')
     u20 = User(name='Stella', uid='98030', breed='Cattle Dog', sex= "female", dob=date(2017, 12, 27), price='$220')
-    u21 = User(name='Carl', uid='98230', breed='Australian Terrier', sex= "male", dob=date(2019, 2, 21), price='$190')    
+    
 
-    users = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20, u21]
+    users = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20]
 
     """Builds sample user/note(s) data"""
     for user in users:
