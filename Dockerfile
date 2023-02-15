@@ -15,5 +15,3 @@ ENV GUNICORN_CMD_ARGS="--workers=1 --bind=0.0.0.0:8332"
 EXPOSE 8332
 
 CMD [ "gunicorn", "main:app" ]
-
-# port 
