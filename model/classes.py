@@ -192,7 +192,7 @@ def initUsers():
     u3 = User(date='2/25/23', time='8:00', location='Poway', classname='Big Dogs')
     u4 = User(date='2/26/23', time='11:00', location='Los Angeles', classname='Large Dogs')
 
-    users = [u1, u2, u4]
+    users = [u1, u2, u3, u4]
 
     """Builds sample user/note(s) data"""
     for user in users:
