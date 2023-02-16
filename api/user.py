@@ -3,13 +3,14 @@ from flask_restful import Api, Resource # used for REST API building
 from datetime import datetime
 
 from model.users import User
+# import requests  # used for testing 
+# import random
 
 user_api = Blueprint('user_api', __name__,
                    url_prefix='/api/users')
 
 # API docs https://flask-restful.readthedocs.io/en/latest/api.html
 api = Api(user_api)
-
 class UserAPI:        
     class _Create(Resource):
         def post(dog):
@@ -18,6 +19,9 @@ class UserAPI:
             
             ''' Avoid garbage in, error checking '''
             # validate name
+            id = body.get('id')
+            if id is None or len(id) < 0:
+                return {'message': f'id has to be at least 1'}, 210
             name = body.get('name')
             if name is None or len(name) < 2:
                 return {'message': f'name is missing, or is less than 2 characters'}, 210
@@ -38,11 +42,13 @@ class UserAPI:
             # look for password and dob
 
             ''' #1: Key code block, setup USER OBJECT '''
-            uo = User( name=name, 
+            uo = User(id = id,
+                      name=name, 
                       uid=uid, 
                       breed=breed, 
                       sex=sex,
-                      price=price)
+                      price=price,
+                      )
             
             if dob is not None:
                 try:
@@ -68,7 +74,7 @@ class UserAPI:
             if user:
                 return jsonify(user.read())
             # failure returns error
-            return {'message': f'Processed {name}, either a format error or last name {uid} is duplicate'}, 210
+            return {'message': f'uid {uid} is duplicate'}, 210
 
     class _Read(Resource):
         def get(dog):
@@ -76,6 +82,15 @@ class UserAPI:
             json_ready = [user.read() for user in users]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
 
+    class _ReadID(Resource):
+        def get(dog, id):
+            user = User.query.filter_by(id=id).first()
+            if user:
+                return jsonify(user.read())
+            else:
+                return {"message": f"No user found with id {id}"}, 404
+    
     # building RESTapi endpoint
     api.add_resource(_Create, '/create')
     api.add_resource(_Read, '/')
+    api.add_resource(_ReadID, '/<int:id>')
