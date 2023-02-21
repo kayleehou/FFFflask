@@ -72,6 +72,8 @@ class User(db.Model):
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, primary_key=True)
+    _image = db.Column(db.String(255), unique=True, nullable=False)
+    _link = db.Column(db.String(255), unique=False, nullable=False)
     _name = db.Column(db.String(255), unique=False, nullable=False)
     _uid = db.Column(db.String(255), unique=True, nullable=False)
     _breed = db.Column(db.String(255), unique=False, nullable=False)
@@ -83,7 +85,9 @@ class User(db.Model):
     posts = db.relationship("Post", cascade='all, delete', backref='users', lazy=True)
 
     # constructor of a User object, initializes the instance variables within object (dog)
-    def __init__(dog, name, uid, breed, sex, price, dob=date.today()):
+    def __init__(dog, image, link, name, uid, breed, sex, dob, price):
+        dog._image = image
+        dog._link = link
         dog._name = name    # variables with dog prefix become part of the object, 
         dog._uid = uid
         dog._breed = breed
@@ -91,7 +95,24 @@ class User(db.Model):
         dog._dob = dob
         dog._price = price
 
+    @property
+    def image(dog):
+        return dog._image
+    
+    # a setter function, allows name to be updated after initial object creation
+    @image.setter
+    def image(dog, image):
+        dog._image = image
 
+    @property
+    def link(dog):
+        return dog._link
+    
+    # a setter function, allows name to be updated after initial object creation
+    @link.setter
+    def link(dog, link):
+        dog._link = link
+        
     # name GETTER
     @property
     def name(dog):
@@ -184,6 +205,8 @@ class User(db.Model):
     def read(dog):
         return {
             "id": dog.id,
+            "image": dog.image,
+            "link" : dog.link,
             "name": dog.name,
             "uid": dog.uid,
             "breed": dog.breed,
@@ -196,8 +219,12 @@ class User(db.Model):
 
     # CRUD update: updates user name, password, phone
     # returns dog
-    def update(dog, name="", uid="", breed="", sex="", dob="", price=""):
+    def update(dog, image="", link="", name="", uid="", breed="", sex="", dob="", price=""):
         """only updates values with length"""
+        if len(image) > 0:
+            dog.image = image
+        if len(link) > 0:
+            dog.link = link   
         if len(name) > 0:
             dog.name = name
         if len(uid) > 0:
@@ -229,26 +256,26 @@ def initUsers():
         db.init_app(app)
         db.create_all()
         """Tester data for table"""
-    u1 = User(name='Joe', uid='81729', breed='Labrador Retriever Blend', sex='male', dob=date(2022, 2, 11), price='$200')
-    u2 = User(name='Bean', uid='83792', breed='Shepherd-Rottweiler Blend', sex="male", dob=date(2019, 1, 31), price='$180')
-    u3 = User(name='Harry', uid='80032', breed='Hound-Terrier Blend', sex= "male", dob=date(2020, 4, 29), price='$160')
-    u4 = User(name='Honey', uid='90276', breed='Retriever Blend', sex= "female", dob=date(2021, 11, 1), price='$200')
-    u5 = User(name='George', uid='90277', breed='Retriever Blend', sex= "male", dob=date(2021, 11, 1), price='$200')
-    u6 = User(name='Julie', uid='91236', breed='Black Mouth Cur Blend', sex= "female", dob=date(2022, 4, 9), price='$250')
-    u7 = User(name='Violet', uid='86327', breed='Retriever Blend', sex= "female", dob=date(2021, 6, 5), price='$198')
-    u8 = User(name='Doug', uid='87729', breed='Shepherd Blend', sex= "male", dob=date(2018, 11, 1), price='$120')
-    u9 = User(name='Thor', uid='90028', breed='Retriever Blend', sex= "male", dob=date(2020, 8, 17), price='$200')
-    u10 = User(name='Stark', uid='92888', breed='Doberman Pinscher Blend', sex= "male", dob=date(2020, 9, 12), price='$220')
-    u11 = User(name='Bucky', uid='94465', breed='Border Collie-Shepherd Blend', sex= "male", dob=date(2020, 9, 24), price='$140')
-    u12 = User(name='Wanda', uid='90992', breed='Shepherd-Husky Blend', sex= "female", dob=date(2019, 2, 1), price='$260')
-    u13 = User(name='Tasha', uid='94327', breed='Jack Russel Terrier', sex= "female", dob=date(2019, 10, 20), price='$130')
-    u14 = User(name='Shang', uid='80786', breed='Chihuahua Short Coat', sex= "male", dob=date(2019, 8, 25), price='$140')
-    u15 = User(name='Parker', uid='86009', breed='Dachshund', sex= "male", dob=date(2020, 3, 9), price='$155')
-    u16 = User(name='Cap', uid='89322', breed='Beagle', sex= "male", dob=date(2022, 1, 11), price='$200')
-    u17 = User(name='Shuri', uid='85359', breed='American Staffordshire Terrier', sex= "female", dob=date(2022, 1, 23), price='$190')
-    u18 = User(name='Musa', uid='96971', breed='American Bulldog', sex= "female", dob=date(2022, 2, 22), price='$160')
-    u19 = User(name='Bloom', uid='91298', breed='Maltese', sex= "female", dob=date(2017, 12, 11), price='$110')
-    u20 = User(name='Stella', uid='98030', breed='Cattle Dog', sex= "female", dob=date(2017, 12, 27), price='$220')
+    u1 = User('https://do31x39459kz9.cloudfront.net/storage/image/cc7c5dd6a09649e3bf5c6bca96b21daa-1670625496-1670625511-jpg/1024-0-', 'https://haeryny.github.io/teamteam/doginfo/', name='Joe', uid='81729', breed='Labrador Retriever Blend', sex='male', dob=date(2022, 2, 11), price='$200')
+    u2 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/672cb9b41e7548f68316d4a328c772d2-1673989499-1673989524-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Bean', uid='83792', breed='Shepherd-Rottweiler Blend', sex="male", dob=date(2019, 1, 31), price='$180')
+    u3 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/9f57a9ccb04d489c8e0faeb7a6aaecc1-1671755085-1671755107-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Harry', uid='80032', breed='Hound-Terrier Blend', sex= "male", dob=date(2020, 4, 29), price='$160')
+    u4 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/7a0fd8c5107f469a8b6e3ec6db1bc48a-1671827148-1671827194-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Honey', uid='90276', breed='Retriever Blend', sex= "female", dob=date(2021, 11, 1), price='$200')
+    u5 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/3b17d9a97b4e41ff984e54467d122820-1670895829-1670895970-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='George', uid='90277', breed='Retriever Blend', sex= "male", dob=date(2021, 11, 1), price='$200')
+    u6 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/574b155c13f5453093faa9a9bbe6cc09-1672428396-1672428453-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Julie', uid='91236', breed='Black Mouth Cur Blend', sex= "female", dob=date(2022, 4, 9), price='$250')
+    u7 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/286ffc0f2e2f4227b804656084a2eb1c-1675561494-1675561497-jpeg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Violet', uid='86327', breed='Retriever Blend', sex= "female", dob=date(2021, 6, 5), price='$198')
+    u8 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/1e445a3de6a44e9ca42ff1f36da4a9b0-1674933023-1674933059-jpeg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Doug', uid='87729', breed='Shepherd Blend', sex= "male", dob=date(2018, 11, 1), price='$120')
+    u9 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/7921672da5a745d497b014d1e25802eb-1673041880-1676231549-jpeg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Thor', uid='90028', breed='Retriever Blend', sex= "male", dob=date(2020, 8, 17), price='$200')
+    u10 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/16890ba2d55b4d2b99b4c1149f8425c5-1675099945-1675099968-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Stark', uid='92888', breed='Doberman Pinscher Blend', sex= "male", dob=date(2020, 9, 12), price='$220')
+    u11 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/da1af9aca3db4c76b250193cafbe6874-1675374061-1675374069-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Bucky', uid='94465', breed='Border Collie-Shepherd Blend', sex= "male", dob=date(2020, 9, 24), price='$140')
+    u12 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/3153afbaf9ed464ab7ab05de8cc68245-1660424834-1661448994-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Wanda', uid='90992', breed='Shepherd-Husky Blend', sex= "female", dob=date(2019, 2, 1), price='$260')
+    u13 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/0c5b23a621874bbcbb4af72e870f2396-1662938148-1662938165-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Tasha', uid='94327', breed='Jack Russel Terrier', sex= "female", dob=date(2019, 10, 20), price='$130')
+    u14 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/d9681fb1d6ec4e718a58a6dd40e4b333-1675210646-1675558115-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Shang', uid='80786', breed='Chihuahua Short Coat', sex= "male", dob=date(2019, 8, 25), price='$140')
+    u15 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/7046abe642674a07bb4ff5a8f5c44da0-1675283719-1675283745-jpeg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Parker', uid='86009', breed='Dachshund', sex= "male", dob=date(2020, 3, 9), price='$155')
+    u16 = User(image='https://i0.wp.com/timesofsandiego.com/wp-content/uploads/2022/08/Beagle.jpg?ssl=1', link='https://haeryny.github.io/teamteam/doginfo/', name='Cap', uid='89322', breed='Beagle', sex= "male", dob=date(2022, 1, 11), price='$200')
+    u17 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/3236e8ede81d4e44b9bf806a18464230-1666577817-1666577841-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Shuri', uid='85359', breed='American Staffordshire Terrier', sex= "female", dob=date(2022, 1, 23), price='$190')
+    u18 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/daddeb64a1374a75821e01893d456306-1671391639-1671391712-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Musa', uid='96971', breed='American Bulldog', sex= "female", dob=date(2022, 2, 22), price='$160')
+    u19 = User(image='https://www.aspcapetinsurance.com/media/2325/facts-about-maltese-dogs.jpg', link='https://haeryny.github.io/teamteam/doginfo/', name='Bloom', uid='91298', breed='Maltese', sex= "female", dob=date(2017, 12, 11), price='$110')
+    u20 = User(image='https://dl5zpyw5k3jeb.cloudfront.net/organization-photos/38001/4/?bust=1516228994&width=720', link='https://haeryny.github.io/teamteam/doginfo/', name='Stella', uid='98030', breed='Cattle Dog', sex= "female", dob=date(2017, 12, 27), price='$220')
     
 
     users = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u13, u14, u15, u16, u17, u18, u19, u20]

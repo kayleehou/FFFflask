@@ -22,6 +22,12 @@ class UserAPI:
             id = body.get('id')
             if id is None or len(id) < 0:
                 return {'message': f'id has to be at least 1'}, 210
+            image = body.get('image')
+            if image is None or len(image) < 2:
+                return {'message': f'image is missing, or is less than 2 characters'}, 210
+            link = body.get('link')
+            if link is None or len(link) < 2:
+                return {'message': f'link is missing, or is less than 2 characters'}, 210
             name = body.get('name')
             if name is None or len(name) < 2:
                 return {'message': f'name is missing, or is less than 2 characters'}, 210
@@ -43,6 +49,8 @@ class UserAPI:
 
             ''' #1: Key code block, setup USER OBJECT '''
             uo = User(id = id,
+                      image=image,
+                      link=link,
                       name=name, 
                       uid=uid, 
                       breed=breed, 
