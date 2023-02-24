@@ -1,18 +1,73 @@
-<!-- Extending the predefined project layout -->
-{% extends "layouts/base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+<style>
 
-<!- This variable sets name of browser tab  -->
-{% set project = "Stubby" %}
+body {
+        background-color: blue;
+}
 
-<!- This is a replacement block for Body in base.html -->
-{% block body %}
-    <!- Try building a new body here, bootstrap is a wise choice ->
-    <div class="px-5 py-5 mx-auto">
-        <h1 class="text-primary"><strong>Stubby Body</strong></h1>
-        <p class="text-secondary">Put your name here</p>
+.card {
+  background-color: #fff;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button a {
+  color: white;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+
+.container .dogs-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap:2rem;
+}
+   
+</style>
+</head>
+<body>
+
+<h1>Dogs for Adoption</h1>
+<h3 class="title"> All dogs spayed/neutered, vaccinated, and microchipped! </h3>
+
+<div class="container">
+    <div class ="dogs-container">
+    {% for dog in dogs %}
+      <div class="column">
+        <div class="card">
+            <img src="{{ dog.image }}" alt="{{ dog.name }}" style="width:100%">
+            <h1>{{ dog.name }}</h1>
+            <p class="price">{{ dog.price }}</p>
+            <p><button><a href="{{ dog.link }}">Learn More</a></button></p>
+        </div>
+      </div>
+    {% endfor %}
     </div>
-{% endblock %}
+</div>
 
-<!- This is turning off birds background from base.html -->
-{% block background %}
-{% endblock %}
+</body>
+</html>

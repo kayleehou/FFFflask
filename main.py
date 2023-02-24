@@ -35,6 +35,10 @@ def index():
 def stub():
     return render_template("stub.html")
 
+@app.route('/page/')  # connects /stub/ URL to stub() function
+def page():
+    return render_template("page.html")
+
 @app.before_first_request
 def activate_job():
     initJokes()
