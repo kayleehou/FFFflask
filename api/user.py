@@ -19,9 +19,9 @@ class UserAPI:
             
             ''' Avoid garbage in, error checking '''
             # validate name
-            id = body.get('id')
-            if id is None or len(id) < 0:
-                return {'message': f'id has to be at least 1'}, 210
+            # id = body.get('id')
+            # if id is None or len(id) < 0:
+            #     return {'message': f'id has to be at least 1'}, 210
             image = body.get('image')
             if image is None or len(image) < 2:
                 return {'message': f'image is missing, or is less than 2 characters'}, 210
@@ -48,8 +48,7 @@ class UserAPI:
             # look for password and dob
 
             ''' #1: Key code block, setup USER OBJECT '''
-            uo = User(id = id,
-                      image=image,
+            uo = User(image=image,
                       link=link,
                       name=name, 
                       uid=uid, 
