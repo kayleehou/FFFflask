@@ -32,7 +32,7 @@ class UserAPI:
             if name is None or len(name) < 2:
                 return {'message': f'name is missing, or is less than 2 characters'}, 210
             uid = body.get('uid')
-            if uid is None or len(uid) < 6:
+            if uid is None or len(uid) < 5:
                 return {'message': f'uidis missing, or is less than 2 characters'}, 210
             breed = body.get('breed')
             if breed is None or len(breed) < 2:
