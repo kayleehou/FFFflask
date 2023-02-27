@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #DDD;
+}
+
+tr:hover {background-color: #D6EEEE;}
+a:link, a:visited {
+  background-color: #ADD8E6;
+  color: white;
+  padding: 5px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: blue;
+}
+</style>
+</head>
+<body>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>UID</th>
+      <th>Breed</th>
+      <th>Sex</th>
+      <th>Date of Birth</th>
+      <th>Age</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bean</td>
+      <td>83792</td>
+      <td>Shepherd-Rottweiler Blend</td>
+      <td>male</td>
+      <td>01-31-2019</td>
+      <td>4</td>
+      <td>$180</td>
+    </tr>
+  </tbody>
+</table>
+
+<a href="https://fluffyfriendfinder.nighthawkcodingsociety.com/page/" >Return Home</a>
+
+</body>
+</html>

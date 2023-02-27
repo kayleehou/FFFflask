@@ -39,6 +39,86 @@ def stub():
 def page():
     return render_template("page.html")
 
+@app.route('/1/')  # connects /stub/ URL to stub() function
+def one():
+    return render_template("1")
+
+@app.route('/2/')  # connects /stub/ URL to stub() function
+def two():
+    return render_template("2")
+
+@app.route('/3/')  # connects /stub/ URL to stub() function
+def three():
+    return render_template("3")
+
+@app.route('/4/')  # connects /stub/ URL to stub() function
+def four():
+    return render_template("4")
+
+@app.route('/5/')  # connects /stub/ URL to stub() function
+def five():
+    return render_template("5")
+
+@app.route('/6/')  # connects /stub/ URL to stub() function
+def six():
+    return render_template("6")
+
+@app.route('/7/')  # connects /stub/ URL to stub() function
+def seven():
+    return render_template("7")
+
+@app.route('/8/')  # connects /stub/ URL to stub() function
+def eight():
+    return render_template("8")
+
+@app.route('/9/')  # connects /stub/ URL to stub() function
+def nine():
+    return render_template("9")
+
+@app.route('/10/')  # connects /stub/ URL to stub() function
+def ten():
+    return render_template("10")
+
+@app.route('/11/')  # connects /stub/ URL to stub() function
+def eleven():
+    return render_template("11")
+
+@app.route('/12/')  # connects /stub/ URL to stub() function
+def twelve():
+    return render_template("12")
+
+@app.route('/13/')  # connects /stub/ URL to stub() function
+def thirteen():
+    return render_template("13")
+
+@app.route('/14/')  # connects /stub/ URL to stub() function
+def fourteen():
+    return render_template("14")
+
+@app.route('/15/')  # connects /stub/ URL to stub() function
+def fifteen():
+    return render_template("15")
+
+@app.route('/16/')  # connects /stub/ URL to stub() function
+def sixteen():
+    return render_template("16")
+
+@app.route('/17/')  # connects /stub/ URL to stub() function
+def seventeen():
+    return render_template("17")
+
+@app.route('/18/')  # connects /stub/ URL to stub() function
+def eighteen():
+    return render_template("18")
+
+@app.route('/19/')  # connects /stub/ URL to stub() function
+def nineteen():
+    return render_template("19")
+
+@app.route('/20/')  # connects /stub/ URL to stub() function
+def twenty():
+    return render_template("20")
+
 @app.before_first_request
 def activate_job():
     initJokes()
