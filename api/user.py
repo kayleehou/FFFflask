@@ -23,10 +23,10 @@ class UserAPI:
             # if id is None or len(id) < 0:
             #     return {'message': f'id has to be at least 1'}, 210
             image = body.get('image')
-            if image is None or len(image) < 2:
+            if image is None or len(image) < 5:
                 return {'message': f'image is missing, or is less than 2 characters'}, 210
             link = body.get('link')
-            if link is None or len(link) < 2:
+            if link is None or len(link) < 5:
                 return {'message': f'link is missing, or is less than 2 characters'}, 210
             name = body.get('name')
             if name is None or len(name) < 2:
@@ -38,7 +38,7 @@ class UserAPI:
             if breed is None or len(breed) < 2:
                 return {'message': f'breed is missing, or is less than 2 characters'}, 210
             sex = body.get('sex')
-            if sex is None or len(sex) < 0:
+            if sex is None or len(sex) < 4:
                 return {'message': f'sex has to be male or female'}, 210
             price = body.get('price')
             if price is None or len(price) < 2:
