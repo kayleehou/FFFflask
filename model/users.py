@@ -256,7 +256,7 @@ def initUsers():
         db.init_app(app)
         db.create_all()
         """Tester data for table"""
-    u1 = User('https://do31x39459kz9.cloudfront.net/storage/image/cc7c5dd6a09649e3bf5c6bca96b21daa-1670625496-1670625511-jpg/1024-0-', 'https://haeryny.github.io/teamteam/doginfo/', name='Joe', uid='81729', breed='Labrador Retriever Blend', sex='male', dob=date(2022, 2, 11), price='$200')
+    u1 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/cc7c5dd6a09649e3bf5c6bca96b21daa-1670625496-1670625511-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Joe', uid='81729', breed='Labrador Retriever Blend', sex='male', dob=date(2022, 2, 11), price='$200')
     u2 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/672cb9b41e7548f68316d4a328c772d2-1673989499-1673989524-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Bean', uid='83792', breed='Shepherd-Rottweiler Blend', sex="male", dob=date(2019, 1, 31), price='$180')
     u3 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/9f57a9ccb04d489c8e0faeb7a6aaecc1-1671755085-1671755107-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Harry', uid='80032', breed='Hound-Terrier Blend', sex= "male", dob=date(2020, 4, 29), price='$160')
     u4 = User(image='https://do31x39459kz9.cloudfront.net/storage/image/7a0fd8c5107f469a8b6e3ec6db1bc48a-1671827148-1671827194-jpg/1024-0-', link='https://haeryny.github.io/teamteam/doginfo/', name='Honey', uid='90276', breed='Retriever Blend', sex= "female", dob=date(2021, 11, 1), price='$200')
